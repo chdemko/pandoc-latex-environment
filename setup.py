@@ -35,7 +35,7 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/chdemko/latex-environment',
+    url='https://github.com/chdemko/pandoc-latex-environment',
 
     # The project's download page
     download_url = 'https://github.com/chdemko/pandoc-latex-environment/archive/master.zip',
