@@ -8,7 +8,7 @@
 [![Python version](https://img.shields.io/pypi/pyversions/pandoc-latex-environment.svg)](https://pypi.python.org/pypi/pandoc-latex-environment/)
 [![Development Status](https://img.shields.io/pypi/status/pandoc-latex-environment.svg)](https://pypi.python.org/pypi/pandoc-latex-environment/)
 
-*pandoc-latex-environment* is a [pandoc] filter for adding LaTeX environement on specific div.
+*pandoc-latex-environment* is a [pandoc] filter for adding LaTeX environement on specific HTML `div` tags.
 
 [pandoc]: http://pandoc.org/
 

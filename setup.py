@@ -94,7 +94,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'pandoc-latex-environment = pandoc_latex_environment:environment',
+            'pandoc-latex-environment = pandoc_latex_environment:main',
         ],
     },
     
