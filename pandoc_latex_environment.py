@@ -10,7 +10,7 @@ import re
 
 def environment(key, value, format, meta):
     # Is it a div and the right format?
-    if key == 'Div':# and format == 'latex':
+    if key == 'Div' and format == 'latex':
 
         # Get the attributes
         [[id, classes, properties], content] = value
@@ -19,7 +19,7 @@ def environment(key, value, format, meta):
 
         for environment, definedClasses in getDefined(meta).items():
             # Is the classes correct?
-            if currentClasses <= definedClasses:
+            if currentClasses >= definedClasses:
                 value[1] = [RawBlock('tex', '\\begin{' + environment + '}')] + content + [RawBlock('tex', '\\end{' + environment + '}')]
                 break
 
