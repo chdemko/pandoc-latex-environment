@@ -14,7 +14,7 @@ def test_div():
     init()
 
     meta = {
-        'latex-environment': {
+        'pandoc-latex-environment': {
             'c': {
                 'test': {
                     'c': [
@@ -109,7 +109,7 @@ def test_empty():
     init()
 
     meta = {
-        'latex-environment': {
+        'pandoc-latex-environment': {
             'c': {
                 'test': {
                     'c': [

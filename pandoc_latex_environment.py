@@ -27,8 +27,8 @@ def getDefined(meta):
     # Return the latex-environment defined in the meta
     if not hasattr(getDefined, 'value'):
         getDefined.value = {}
-        if 'latex-environment' in meta and meta['latex-environment']['t'] == 'MetaMap':
-            for environment, classes in meta['latex-environment']['c'].items():
+        if 'pandoc-latex-environment' in meta and meta['pandoc-latex-environment']['t'] == 'MetaMap':
+            for environment, classes in meta['pandoc-latex-environment']['c'].items():
                 if classes['t'] == 'MetaList':
                     getDefined.value[environment] = []
                     for klass in classes['c']:
