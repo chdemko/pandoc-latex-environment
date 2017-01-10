@@ -18,10 +18,11 @@ def environment(key, value, format, meta):
         currentClasses = set(classes)
 
         for environment, definedClasses in getDefined(meta).items():
-            # Is the classes correct?
-            if currentClasses >= definedClasses:
-                value[1] = [RawBlock('tex', '\\begin{' + environment + '}')] + content + [RawBlock('tex', '\\end{' + environment + '}')]
-                break
+            for definedClass in definedClasses:
+                # Is the classes correct?
+                if definedClass in currentClasses:
+                    value[1] = [RawBlock('tex', '\\begin{' + environment + '}')] + content + [RawBlock('tex', '\\end{' + environment + '}')]
+                    break
 
 def getDefined(meta):
     # Return the latex-environment defined in the meta
