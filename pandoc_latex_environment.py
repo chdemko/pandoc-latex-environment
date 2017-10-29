@@ -25,7 +25,13 @@ def environment(key, value, format, meta):
                 else:
                     label = ''
 
-                value[1] = [RawBlock('tex', '\\begin{' + environment + '}' + label)] + content + [RawBlock('tex', '\\end{' + environment + '}')]
+                currentProperties = dict(properties)
+                if 'title' in currentProperties:
+                    title = '[' + currentProperties['title'] + ']'
+                else:
+                    title = ''
+
+                value[1] = [RawBlock('tex', '\\begin{' + environment + '}' + title + label)] + content + [RawBlock('tex', '\\end{' + environment + '}')]
                 break
 
 def getDefined(meta):
