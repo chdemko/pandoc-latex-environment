@@ -20,7 +20,18 @@ def environment(key, value, format, meta):
         for environment, definedClasses in getDefined(meta).items():
             # Is the classes correct?
             if currentClasses >= definedClasses:
-                value[1] = [RawBlock('tex', '\\begin{' + environment + '}')] + content + [RawBlock('tex', '\\end{' + environment + '}')]
+                if id != '':
+                    label = ' \\label{' + id + '}'
+                else:
+                    label = ''
+
+                currentProperties = dict(properties)
+                if 'title' in currentProperties:
+                    title = '[' + currentProperties['title'] + ']'
+                else:
+                    title = ''
+
+                value[1] = [RawBlock('tex', '\\begin{' + environment + '}' + title + label)] + content + [RawBlock('tex', '\\end{' + environment + '}')]
                 break
 
 def getDefined(meta):
@@ -43,4 +54,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

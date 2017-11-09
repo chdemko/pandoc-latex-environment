@@ -180,3 +180,198 @@ def test_empty():
 
     assert json.loads(json.dumps(src)) == dest
 
+
+def test_div_with_id():
+    init()
+
+    meta = {
+        'pandoc-latex-environment': {
+            'c': {
+                'test': {
+                    'c': [
+                        {
+                            'c': [
+                                {
+                                    'c': 'class1',
+                                    't': 'Str'
+                                }
+                            ],
+                            't': 'MetaInlines'
+                        },
+                        {
+                            'c': [
+                                {
+                                    'c': 'class2',
+                                    't': 'Str'
+                                }
+                            ],
+                            't': 'MetaInlines'
+                        }
+                    ],
+                    't': 'MetaList'
+                }
+            },
+            't': 'MetaMap'
+        }
+    }
+
+    src = json.loads(json.dumps(Div(
+        [
+            'identifier',
+            [
+                'class1',
+                'class2'
+            ],
+            []
+        ],
+        [
+            {
+                'c': [
+                    {
+                        'c': 'content',
+                        't': 'Str'
+                    }
+                ],
+                't': 'Plain'
+            }
+        ]
+    )))
+    dest = json.loads(json.dumps(Div(
+        [
+            'identifier',
+            [
+                'class1',
+                'class2'
+            ],
+            []
+        ],
+        [
+            {
+                'c': [
+                    'tex',
+                    '\\begin{test} \\label{identifier}'
+                ],
+                't': 'RawBlock'
+            },
+            {
+                'c': [
+                    {
+                        'c': 'content',
+                        't': 'Str'
+                    }
+                ],
+                't': 'Plain'
+            },
+            {
+                'c': [
+                    'tex',
+                    '\\end{test}'
+                ],
+                't': 'RawBlock'
+            }
+        ]
+    )))
+
+    pandoc_latex_environment.environment(src['t'], src['c'], 'latex', meta)
+
+    assert json.loads(json.dumps(src)) == dest
+
+
+def test_div_with_title():
+    init()
+
+    meta = {
+        'pandoc-latex-environment': {
+            'c': {
+                'test': {
+                    'c': [
+                        {
+                            'c': [
+                                {
+                                    'c': 'class1',
+                                    't': 'Str'
+                                }
+                            ],
+                            't': 'MetaInlines'
+                        },
+                        {
+                            'c': [
+                                {
+                                    'c': 'class2',
+                                    't': 'Str'
+                                }
+                            ],
+                            't': 'MetaInlines'
+                        }
+                    ],
+                    't': 'MetaList'
+                }
+            },
+            't': 'MetaMap'
+        }
+    }
+
+    src = json.loads(json.dumps(Div(
+        [
+            '',
+            [
+                'class1',
+                'class2'
+            ],
+            [
+                ['title', 'theTitle']
+            ]
+        ],
+        [
+            {
+                'c': [
+                    {
+                        'c': 'content',
+                        't': 'Str'
+                    }
+                ],
+                't': 'Plain'
+            }
+        ]
+    )))
+    dest = json.loads(json.dumps(Div(
+        [
+            '',
+            [
+                'class1',
+                'class2'
+            ],
+            [
+                ['title', 'theTitle']
+            ]
+        ],
+        [
+            {
+                'c': [
+                    'tex',
+                    '\\begin{test}[theTitle]'
+                ],
+                't': 'RawBlock'
+            },
+            {
+                'c': [
+                    {
+                        'c': 'content',
+                        't': 'Str'
+                    }
+                ],
+                't': 'Plain'
+            },
+            {
+                'c': [
+                    'tex',
+                    '\\end{test}'
+                ],
+                't': 'RawBlock'
+            }
+        ]
+    )))
+
+    pandoc_latex_environment.environment(src['t'], src['c'], 'latex', meta)
+
+    assert json.loads(json.dumps(src)) == dest
