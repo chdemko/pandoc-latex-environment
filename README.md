@@ -2,11 +2,11 @@
 [![Build Status](https://img.shields.io/travis/chdemko/pandoc-latex-environment.svg)](http://travis-ci.org/chdemko/pandoc-latex-environment)
 [![Coveralls](https://img.shields.io/coveralls/chdemko/pandoc-latex-environment.svg)](https://coveralls.io/github/chdemko/pandoc-latex-environment)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/chdemko/pandoc-latex-environment.svg)](https://scrutinizer-ci.com/g/chdemko/pandoc-latex-environment/)
-[![PyPI version](https://img.shields.io/pypi/v/pandoc-latex-environment.svg)](https://pypi.python.org/pypi/pandoc-latex-environment/)
+[![PyPI version](https://img.shields.io/pypi/v/pandoc-latex-environment.svg)](https://pypi.org/project/pandoc-latex-environment/)
 [![License](https://img.shields.io/pypi/l/pandoc-latex-environment.svg)](http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html)
-[![Downloads](https://img.shields.io/pypi/dm/pandoc-latex-environment.svg)](https://pypi.python.org/pypi/pandoc-latex-environment/)
-[![Python version](https://img.shields.io/pypi/pyversions/pandoc-latex-environment.svg)](https://pypi.python.org/pypi/pandoc-latex-environment/)
-[![Development Status](https://img.shields.io/pypi/status/pandoc-latex-environment.svg)](https://pypi.python.org/pypi/pandoc-latex-environment/)
+[![Downloads](https://img.shields.io/pypi/dm/pandoc-latex-environment.svg)](https://pypi.org/project/pandoc-latex-environment/)
+[![Python version](https://img.shields.io/pypi/pyversions/pandoc-latex-environment.svg)](https://pypi.org/project/pandoc-latex-environment/)
+[![Development Status](https://img.shields.io/pypi/status/pandoc-latex-environment.svg)](https://pypi.org/project/pandoc-latex-environment/)
 
 *pandoc-latex-environment* is a [pandoc] filter for adding LaTeX environement on specific HTML `div` tags.
 
