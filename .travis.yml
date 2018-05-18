@@ -4,14 +4,15 @@ python:
   - "3.4"
   - "3.5"
 before_install:
-  - wget https://github.com/jgm/pandoc/releases/download/2.1.1/pandoc-2.1.1-1-amd64.deb
-  - sudo dpkg -i pandoc-2.1.1-1-amd64.deb
+  - wget https://github.com/jgm/pandoc/releases/download/2.2.1/pandoc-2.2.1-1-amd64.deb
+  - sudo dpkg -i pandoc-2.2.1-1-amd64.deb
   - pandoc -v
 install:
   - pip install coveralls
+  - pip install tox-travis
 script:
-  - python setup.py build_ext -i
-  - python -m compileall -f .
-  - coverage run --source=pandoc_latex_environment setup.py test
+  - tox
+  - coverage run --source=pandoc_latex_newpage setup.py test
+  - coverage report -m
 after_success:
   - coveralls
