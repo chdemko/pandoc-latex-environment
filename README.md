@@ -38,6 +38,10 @@ To upgrade to the most recent release, use
 
     pip install --upgrade pandoc-latex-environment 
 
+To upgrade to the current code, use
+
+    pip install --upgrade --force git+https://github.com/chdemko/pandoc-latex-environment
+
 `pip` is a script that downloads and installs modules from the Python Package Index, [PyPI].  It should come installed with your python distribution. If you are running linux, `pip` may be bundled separately. On a Debian-based system (including Ubuntu), you can install it as root using
 
     apt-get update
