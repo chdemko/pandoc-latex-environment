@@ -1,4 +1,4 @@
-# pandoc-latex-environmentlatex-environment
+# pandoc-latex-environment
 [![Build Status](https://img.shields.io/travis/chdemko/pandoc-latex-environment/master.svg)](https://travis-ci.org/chdemko/pandoc-latex-environment/branches)
 [![Coveralls](https://img.shields.io/coveralls/github/chdemko/pandoc-latex-environment/master.svg)](https://coveralls.io/github/chdemko/pandoc-latex-environment?branch=master)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/chdemko/pandoc-latex-environment.svg)](https://scrutinizer-ci.com/g/chdemko/pandoc-latex-environment/)
