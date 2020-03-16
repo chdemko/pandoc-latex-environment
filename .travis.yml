@@ -3,9 +3,11 @@ python:
   - "2.7"
   - "3.4"
   - "3.5"
+  - "3.6"
+  - "3.7"
 before_install:
-  - wget https://github.com/jgm/pandoc/releases/download/2.2.3.2/pandoc-2.2.3.2-1-amd64.deb
-  - sudo dpkg -i pandoc-2.2.3.2-1-amd64.deb
+  - wget https://github.com/jgm/pandoc/releases/download/2.9.2/pandoc-2.9.2-1-amd64.deb
+  - sudo dpkg -i pandoc-2.9.2-1-amd64.deb
   - pandoc -v
 install:
   - pip install coveralls

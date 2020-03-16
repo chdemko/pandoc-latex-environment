@@ -76,27 +76,21 @@ def test_div():
         ],
         [
             {
+                't': 'Plain',
                 'c': [
-                    'tex',
-                    '\\begin{test}'
-                ],
-                't': 'RawBlock'
-            },
-            {
-                'c': [
+                    {
+                        't': 'RawInline',
+                        'c': ['tex', '\\begin{test}\n']
+                    },
                     {
                         'c': 'content',
                         't': 'Str'
+                    },
+                    {
+                        't': 'RawInline',
+                        'c': ['tex', '\n\\end{test}']
                     }
-                ],
-                't': 'Plain'
-            },
-            {
-                'c': [
-                    'tex',
-                    '\\end{test}'
-                ],
-                't': 'RawBlock'
+                ]
             }
         ]
     )))
@@ -247,27 +241,21 @@ def test_div_with_id():
         ],
         [
             {
+                't': 'Plain',
                 'c': [
-                    'tex',
-                    '\\begin{test} \\label{identifier}'
-                ],
-                't': 'RawBlock'
-            },
-            {
-                'c': [
+                    {
+                        't': 'RawInline',
+                        'c': ['tex', '\\begin{test}\n\\label{identifier}']
+                    },
                     {
                         'c': 'content',
                         't': 'Str'
+                    },
+                    {
+                        't': 'RawInline',
+                        'c': ['tex', '\n\\end{test}']
                     }
-                ],
-                't': 'Plain'
-            },
-            {
-                'c': [
-                    'tex',
-                    '\\end{test}'
-                ],
-                't': 'RawBlock'
+                ]
             }
         ]
     )))
@@ -347,31 +335,26 @@ def test_div_with_title():
         ],
         [
             {
+                't': 'Plain',
                 'c': [
-                    'tex',
-                    '\\begin{test}[theTitle]'
-                ],
-                't': 'RawBlock'
-            },
-            {
-                'c': [
+                    {
+                        't': 'RawInline',
+                        'c': ['tex', '\\begin{test}[theTitle]\n']
+                    },
                     {
                         'c': 'content',
                         't': 'Str'
+                    },
+                    {
+                        't': 'RawInline',
+                        'c': ['tex', '\n\\end{test}']
                     }
-                ],
-                't': 'Plain'
-            },
-            {
-                'c': [
-                    'tex',
-                    '\\end{test}'
-                ],
-                't': 'RawBlock'
+                ]
             }
         ]
     )))
 
     pandoc_latex_environment.environment(src['t'], src['c'], 'latex', meta)
 
+    print(json.loads(json.dumps(src)))
     assert json.loads(json.dumps(src)) == dest

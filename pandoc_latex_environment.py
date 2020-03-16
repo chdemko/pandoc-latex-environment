@@ -21,7 +21,7 @@ def environment(key, value, format, meta):
             # Is the classes correct?
             if currentClasses >= definedClasses:
                 if id != '':
-                    label = ' \\label{' + id + '}'
+                    label = '\\label{' + id + '}'
                 else:
                     label = ''
 
@@ -42,12 +42,15 @@ def environment(key, value, format, meta):
                     replacement = node['c']
                     pos += 1
                     if pos == 1:
-                        replacement = [RawInline('tex', '\\begin{' + environment + '}\n' + title + label)] + replacement
+                        replacement = [RawInline('tex', '\\begin{' + environment + '}' + title + '\n' + label)] + replacement
                     if pos == last:
                         replacement = replacement + [RawInline('tex', '\n\\end{' + environment + '}')]
-                    newconts.append({
+                    newconts.append(
+                        {
                             't': node['t'],
-                            'c': replacement})
+                            'c': replacement
+                        }
+                    )
 
                 value[1] = newconts
                 break
