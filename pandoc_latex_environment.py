@@ -7,7 +7,6 @@ Pandoc filter for adding LaTeX environement on specific div
 from pandocfilters import toJSONFilters, stringify, RawInline, Para
 
 import re
-import sys
 
 def environment(key, value, format, meta):
     # Is it a div and the right format?
@@ -36,59 +35,23 @@ def environment(key, value, format, meta):
                 if len(content) == 0:
                     content = [Para([])]
 
-                #for line in content:
-                #    sys.stderr.write(str(line))
+                begin = [RawInline('tex', '\\begin{' + environment + '}' + title + '\n' + label)]
+                content.insert(0, 
+                    {
+                        't': 'Para',
+                        'c': begin
+                    }
+                )
 
-                newconts = []
-                pos = 0
-                last = len(content)
-                for node in content:
-                    node_content = node['c']
-                    #sys.stderr.write('Nodelength: {}; '.format(len(node['c'])))
-                    #sys.stderr.write('Nodetype: {}; '.format(node['t']))
-                    pos += 1
-                    if pos == 1:
-                        begin = [RawInline('tex', '\\begin{' + environment + '}' + title + '\n' + label)]
-                        # Add the beginning Latex as a new paragraph to avoid conflict with bulletlists.
-                        newconts.append(
-                            {
-                                't': 'Para',
-                                'c': begin
-                            }
-                        )
-                        # Now start adding the original content
-                        newconts.append(
-                            {
-                                't': node['t'],
-                                'c': node_content
-                            }
-                        )
-                    elif pos == last:
-                        end = [RawInline('tex', '\n\\end{' + environment + '}')]
-                        # First add the original content.
-                        newconts.append(
-                            {
-                                't': node['t'],
-                                'c': node_content
-                            }
-                        )
-                        # Then add the ending Latex as a new paragraph to avoid conflict with bulletlists.
-                        newconts.append(
-                            {
-                                't': 'Para',
-                                'c': end
-                            }
-                        )
-                    else:
-                        newconts.append(
-                            {
-                                't': node['t'],
-                                'c': node_content
-                            }
-                        )
-                        
+                end = [RawInline('tex', '\n\\end{' + environment + '}')]
+                content.append(
+                    {
+                        't': 'Para',
+                        'c': end
+                    }
+                )
 
-                value[1] = newconts
+                value[1] = content
                 break
 
 def getDefined(meta):
