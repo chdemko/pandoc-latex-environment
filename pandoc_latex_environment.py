@@ -34,25 +34,24 @@ def environment(key, value, format, meta):
                 # fix an empty block not rendering any output
                 if len(content) == 0:
                     content = [Para([])]
-                
-                newconts = []
-                pos = 0
-                last = len(content)
-                for node in content:
-                    replacement = node['c']
-                    pos += 1
-                    if pos == 1:
-                        replacement = [RawInline('tex', '\\begin{' + environment + '}' + title + '\n' + label)] + replacement
-                    if pos == last:
-                        replacement = replacement + [RawInline('tex', '\n\\end{' + environment + '}')]
-                    newconts.append(
-                        {
-                            't': node['t'],
-                            'c': replacement
-                        }
-                    )
 
-                value[1] = newconts
+                begin = [RawInline('tex', '\\begin{' + environment + '}' + title + '\n' + label)]
+                content.insert(0, 
+                    {
+                        't': 'Para',
+                        'c': begin
+                    }
+                )
+
+                end = [RawInline('tex', '\n\\end{' + environment + '}')]
+                content.append(
+                    {
+                        't': 'Para',
+                        'c': end
+                    }
+                )
+
+                value[1] = content
                 break
 
 def getDefined(meta):
