@@ -1,10 +1,10 @@
 # pandoc-latex-environment
 ![Python package](https://github.com/chdemko/pandoc-latex-environment/workflows/Python%20package/badge.svg?branch=develop)
-[![Coveralls](https://img.shields.io/coveralls/github/chdemko/pandoc-latex-environment/1.1.5.svg)](https://coveralls.io/github/chdemko/pandoc-latex-environment?branch=1.1.5)
+[![Coveralls](https://img.shields.io/coveralls/github/chdemko/pandoc-latex-environment/develop.svg)](https://coveralls.io/github/chdemko/pandoc-latex-environment?branch=develop)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/chdemko/pandoc-latex-environment.svg)](https://scrutinizer-ci.com/g/chdemko/pandoc-latex-environment/)
 [![PyPI version](https://img.shields.io/pypi/v/pandoc-latex-environment.svg)](https://pypi.org/project/pandoc-latex-environment/)
 [![PyPI format](https://img.shields.io/pypi/format/pandoc-latex-environment.svg)](https://pypi.org/project/pandoc-latex-environment/)
-[![License](https://img.shields.io/pypi/l/pandoc-latex-environment.svg)](https://raw.githubusercontent.com/chdemko/pandoc-latex-environment/1.1.5/LICENSE)
+[![License](https://img.shields.io/pypi/l/pandoc-latex-environment.svg)](https://raw.githubusercontent.com/chdemko/pandoc-latex-environment/develop/LICENSE)
 [![Python version](https://img.shields.io/pypi/pyversions/pandoc-latex-environment.svg)](https://pypi.org/project/pandoc-latex-environment/)
 [![Development Status](https://img.shields.io/pypi/status/pandoc-latex-environment.svg)](https://pypi.org/project/pandoc-latex-environment/)
 
