@@ -22,6 +22,7 @@ setup(
     # The project's description
     description='A pandoc filter for adding LaTeX environement on specific div',
     long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/markdown",
 
     # The project's main homepage.
     url='https://github.com/chdemko/pandoc-latex-environment',
