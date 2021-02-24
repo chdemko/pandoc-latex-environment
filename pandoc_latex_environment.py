@@ -4,7 +4,7 @@
 Pandoc filter for adding LaTeX environement on specific div
 """
 
-from pandocfilters import toJSONFilters, stringify, RawInline, Para
+from pandocfilters import toJSONFilters, stringify, RawBlock, Para
 
 import re
 
@@ -21,7 +21,7 @@ def environment(key, value, format, meta):
             # Is the classes correct?
             if currentClasses >= definedClasses:
                 if id != '':
-                    label = '\\label{' + id + '}'
+                    label = '\n\\label{' + id + '}'
                 else:
                     label = ''
 
@@ -31,27 +31,10 @@ def environment(key, value, format, meta):
                 else:
                     title = ''
                 
-                # fix an empty block not rendering any output
-                if len(content) == 0:
-                    content = [Para([])]
+                before = RawBlock('tex', '\\begin{' + environment + '}' + title + label)
+                after = RawBlock('tex', '\\end{' + environment + '}')
 
-                begin = [RawInline('tex', '\\begin{' + environment + '}' + title + '\n' + label)]
-                content.insert(0, 
-                    {
-                        't': 'Para',
-                        'c': begin
-                    }
-                )
-
-                end = [RawInline('tex', '\n\\end{' + environment + '}')]
-                content.append(
-                    {
-                        't': 'Para',
-                        'c': end
-                    }
-                )
-
-                value[1] = content
+                value[1] = [before] + content + [after]
                 break
 
 def getDefined(meta):

@@ -74,23 +74,22 @@ def test_div():
             ],
             []
         ],
-        [
+        [      
             {
-                't': 'Plain',
+                't': 'RawBlock',
+                'c': ['tex', '\\begin{test}']
+            },
+            {
                 'c': [
-                    {
-                        't': 'RawInline',
-                        'c': ['tex', '\\begin{test}\n']
-                    },
-                    {
-                        'c': 'content',
-                        't': 'Str'
-                    },
-                    {
-                        't': 'RawInline',
-                        'c': ['tex', '\n\\end{test}']
-                    }
-                ]
+                {
+                    'c': 'content',
+                    't': 'Str'
+                }],
+                't': 'Plain'
+            },
+            {
+                't': 'RawBlock',
+                'c': ['tex', '\\end{test}']
             }
         ]
     )))
@@ -230,6 +229,7 @@ def test_div_with_id():
             }
         ]
     )))
+
     dest = json.loads(json.dumps(Div(
         [
             'identifier',
@@ -239,23 +239,22 @@ def test_div_with_id():
             ],
             []
         ],
-        [
+        [      
             {
-                't': 'Plain',
+                't': 'RawBlock',
+                'c': ['tex', '\\begin{test}\n\\label{identifier}']
+            },
+            {
                 'c': [
-                    {
-                        't': 'RawInline',
-                        'c': ['tex', '\\begin{test}\n\\label{identifier}']
-                    },
-                    {
-                        'c': 'content',
-                        't': 'Str'
-                    },
-                    {
-                        't': 'RawInline',
-                        'c': ['tex', '\n\\end{test}']
-                    }
-                ]
+                {
+                    'c': 'content',
+                    't': 'Str'
+                }],
+                't': 'Plain'
+            },
+            {
+                't': 'RawBlock',
+                'c': ['tex', '\\end{test}']
             }
         ]
     )))
@@ -322,6 +321,7 @@ def test_div_with_title():
             }
         ]
     )))
+    
     dest = json.loads(json.dumps(Div(
         [
             '',
@@ -333,28 +333,26 @@ def test_div_with_title():
                 ['title', 'theTitle']
             ]
         ],
-        [
+        [      
             {
-                't': 'Plain',
+                't': 'RawBlock',
+                'c': ['tex', '\\begin{test}[theTitle]']
+            },
+            {
                 'c': [
-                    {
-                        't': 'RawInline',
-                        'c': ['tex', '\\begin{test}[theTitle]\n']
-                    },
-                    {
-                        'c': 'content',
-                        't': 'Str'
-                    },
-                    {
-                        't': 'RawInline',
-                        'c': ['tex', '\n\\end{test}']
-                    }
-                ]
+                {
+                    'c': 'content',
+                    't': 'Str'
+                }],
+                't': 'Plain'
+            },
+            {
+                't': 'RawBlock',
+                'c': ['tex', '\\end{test}']
             }
         ]
     )))
 
     pandoc_latex_environment.environment(src['t'], src['c'], 'latex', meta)
 
-    print(json.loads(json.dumps(src)))
     assert json.loads(json.dumps(src)) == dest

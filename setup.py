@@ -7,20 +7,10 @@ https://github.com/chdemko/pandoc-latex-environment
 
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
-# To use a consistent encoding
-from codecs import open
-from os import path
-
-here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-try:
-    import pypandoc
-    long_description = pypandoc.convert('README.md', 'rst')
-except (IOError, ImportError):
-    with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-        long_description = f.read()
-
+with open("README.md", "r") as stream:
+    LONG_DESCRIPTION = stream.read()
 
 setup(
     name='pandoc-latex-environment',
@@ -28,11 +18,10 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.1.4',
 
     # The project's description
     description='A pandoc filter for adding LaTeX environement on specific div',
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
 
     # The project's main homepage.
     url='https://github.com/chdemko/pandoc-latex-environment',
@@ -79,6 +68,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
 
         # Natural language used
         'Natural Language :: English',
@@ -105,10 +95,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=[
-        'pandocfilters>=1.4',
-        'pypandoc>=1.4'
-    ],
+    install_requires=['pandocfilters>=1.4'],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
