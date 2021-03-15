@@ -46,7 +46,11 @@ def getDefined(meta):
                 if classes['t'] == 'MetaList':
                     getDefined.value[environment] = []
                     for klass in classes['c']:
-                        string = stringify(klass)
+                        if klass['t']=='MetaString':  # this happens when metadata comes from a defaults file
+                            string = klass['c']
+                        else:
+                            string = stringify(klass)  # stringify currently cannot convert MetaString object - reported upstream
+
                         if re.match('^[a-zA-Z][\w.:-]*$', string):
                             getDefined.value[environment].append(string)
                     getDefined.value[environment] = set(getDefined.value[environment])
