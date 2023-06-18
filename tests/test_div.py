@@ -1,358 +1,145 @@
 # This Python file uses the following encoding: utf-8
 from unittest import TestCase
-from pandocfilters import Div, Str, RawBlock
+from panflute import Div, Str, RawBlock
 
-import json
 
 import pandoc_latex_environment
 
-def init():
-    if hasattr(pandoc_latex_environment.getDefined, 'value'):
-        delattr(pandoc_latex_environment.getDefined, 'value')
 
-def test_div():
-    init()
+# This Python file uses the following encoding: utf-8
 
-    meta = {
-        'pandoc-latex-environment': {
-            'c': {
-                'test': {
-                    'c': [
-                        {
-                            'c': [
-                                {
-                                    'c': 'class1',
-                                    't': 'Str'
-                                }
-                            ],
-                            't': 'MetaInlines'
-                        },
-                        {
-                            'c': [
-                                {
-                                    'c': 'class2',
-                                    't': 'Str'
-                                }
-                            ],
-                            't': 'MetaInlines'
-                        }
-                    ],
-                    't': 'MetaList'
-                }
-            },
-            't': 'MetaMap'
-        }
-    }
+from unittest import TestCase
 
-    src = json.loads(json.dumps(Div(
-        [
-            '',
-            [
-                'class1',
-                'class2'
-            ],
-            []
-        ],
-        [
-            {
-                'c': [
-                    {
-                        'c': 'content',
-                        't': 'Str'
-                    }
-                ],
-                't': 'Plain'
-            }
-        ]
-    )))
-    dest = json.loads(json.dumps(Div(
-        [
-            '',
-            [
-                'class1',
-                'class2'
-            ],
-            []
-        ],
-        [      
-            {
-                't': 'RawBlock',
-                'c': ['tex', '\\begin{test}']
-            },
-            {
-                'c': [
-                {
-                    'c': 'content',
-                    't': 'Str'
-                }],
-                't': 'Plain'
-            },
-            {
-                't': 'RawBlock',
-                'c': ['tex', '\\end{test}']
-            }
-        ]
-    )))
+from panflute import convert_text, Para, Image
 
-    pandoc_latex_environment.environment(src['t'], src['c'], 'latex', meta)
-
-    assert json.loads(json.dumps(src)) == dest
-
-def test_empty():
-    init()
-
-    meta = {
-        'pandoc-latex-environment': {
-            'c': {
-                'test': {
-                    'c': [
-                        {
-                            'c': [
-                                {
-                                    'c': 'class1',
-                                    't': 'Str'
-                                }
-                            ],
-                            't': 'MetaInlines'
-                        },
-                        {
-                            'c': [
-                                {
-                                    'c': 'class2',
-                                    't': 'Str'
-                                }
-                            ],
-                            't': 'MetaInlines'
-                        }
-                    ],
-                    't': 'MetaList'
-                }
-            },
-            't': 'MetaMap'
-        }
-    }
-
-    src = json.loads(json.dumps(Div(
-        [
-            '',
-            [],
-            []
-        ],
-        [
-            {
-                'c': [
-                    {
-                        'c': 'content',
-                        't': 'Str'
-                    }
-                ],
-                't': 'Plain'
-            }
-        ]
-    )))
-    dest = json.loads(json.dumps(Div(
-        [
-            '',
-            [],
-            []
-        ],
-        [
-            {
-                'c': [
-                    {
-                        'c': 'content',
-                        't': 'Str'
-                    }
-                ],
-                't': 'Plain'
-            }
-        ]
-    )))
-
-    pandoc_latex_environment.environment(src['t'], src['c'], 'latex', meta)
-
-    assert json.loads(json.dumps(src)) == dest
+import pandoc_latex_environment
 
 
-def test_div_with_id():
-    init()
+class EnvironmentTest(TestCase):
+    @classmethod
+    def conversion(cls, markdown, fmt="markdown"):
+        doc = convert_text(markdown, standalone=True)
+        doc.format = fmt
+        pandoc_latex_environment.main(doc)
+        return doc
 
-    meta = {
-        'pandoc-latex-environment': {
-            'c': {
-                'test': {
-                    'c': [
-                        {
-                            'c': [
-                                {
-                                    'c': 'class1',
-                                    't': 'Str'
-                                }
-                            ],
-                            't': 'MetaInlines'
-                        },
-                        {
-                            'c': [
-                                {
-                                    'c': 'class2',
-                                    't': 'Str'
-                                }
-                            ],
-                            't': 'MetaInlines'
-                        }
-                    ],
-                    't': 'MetaList'
-                }
-            },
-            't': 'MetaMap'
-        }
-    }
+    def test_simple(self):
+        doc = EnvironmentTest.conversion(
+            """
+---                           
+pandoc-latex-environment:
+  test: [class1, class2]
+---
+::: {.class1 .class2}
+content
+:::
+            """.strip(),
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """
+\\begin{test}
 
-    src = json.loads(json.dumps(Div(
-        [
-            'identifier',
-            [
-                'class1',
-                'class2'
-            ],
-            []
-        ],
-        [
-            {
-                'c': [
-                    {
-                        'c': 'content',
-                        't': 'Str'
-                    }
-                ],
-                't': 'Plain'
-            }
-        ]
-    )))
+content
 
-    dest = json.loads(json.dumps(Div(
-        [
-            'identifier',
-            [
-                'class1',
-                'class2'
-            ],
-            []
-        ],
-        [      
-            {
-                't': 'RawBlock',
-                'c': ['tex', '\\begin{test}\n\\label{identifier}']
-            },
-            {
-                'c': [
-                {
-                    'c': 'content',
-                    't': 'Str'
-                }],
-                't': 'Plain'
-            },
-            {
-                't': 'RawBlock',
-                'c': ['tex', '\\end{test}']
-            }
-        ]
-    )))
+\\end{test}
+            """.strip(),
+        )
 
-    pandoc_latex_environment.environment(src['t'], src['c'], 'latex', meta)
+    def test_title(self):
+        doc = EnvironmentTest.conversion(
+            """
+---
+pandoc-latex-environment:
+  test: [class1, class2]
+---
+::: {.class1 .class2 title="My Title"}
+content
+:::
+            """,
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """
+\\begin{test}{My Title}
 
-    assert json.loads(json.dumps(src)) == dest
+content
 
+\\end{test}
+            """.strip(),
+        )
 
-def test_div_with_title():
-    init()
+    def test_title_complex(self):
+        doc = EnvironmentTest.conversion(
+            """
+---
+pandoc-latex-environment:
+  test: ['class1', 'class2']
+---
+::: {.class1 .class2 title="**My Title**"}
+content
+:::
+            """,
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """
+\\begin{test}{\\textbf{My Title}}
 
-    meta = {
-        'pandoc-latex-environment': {
-            'c': {
-                'test': {
-                    'c': [
-                        {
-                            'c': [
-                                {
-                                    'c': 'class1',
-                                    't': 'Str'
-                                }
-                            ],
-                            't': 'MetaInlines'
-                        },
-                        {
-                            'c': [
-                                {
-                                    'c': 'class2',
-                                    't': 'Str'
-                                }
-                            ],
-                            't': 'MetaInlines'
-                        }
-                    ],
-                    't': 'MetaList'
-                }
-            },
-            't': 'MetaMap'
-        }
-    }
+content
 
-    src = json.loads(json.dumps(Div(
-        [
-            '',
-            [
-                'class1',
-                'class2'
-            ],
-            [
-                ['title', 'theTitle']
-            ]
-        ],
-        [
-            {
-                'c': [
-                    {
-                        'c': 'content',
-                        't': 'Str'
-                    }
-                ],
-                't': 'Plain'
-            }
-        ]
-    )))
-    
-    dest = json.loads(json.dumps(Div(
-        [
-            '',
-            [
-                'class1',
-                'class2'
-            ],
-            [
-                ['title', 'theTitle']
-            ]
-        ],
-        [      
-            {
-                't': 'RawBlock',
-                'c': ['tex', '\\begin{test}[theTitle]']
-            },
-            {
-                'c': [
-                {
-                    'c': 'content',
-                    't': 'Str'
-                }],
-                't': 'Plain'
-            },
-            {
-                't': 'RawBlock',
-                'c': ['tex', '\\end{test}']
-            }
-        ]
-    )))
+\\end{test}
+            """.strip(),
+        )
 
-    pandoc_latex_environment.environment(src['t'], src['c'], 'latex', meta)
+    def test_id(self):
+        doc = EnvironmentTest.conversion(
+            """
+---
+pandoc-latex-environment:
+  test: ['class1', 'class2']
+---
+::: {#id1 .class1 .class2}
+content
+:::
+            """,
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """
+\\begin{test}
+\\label{id1}
 
-    assert json.loads(json.dumps(src)) == dest
+content
+
+\\end{test}
+            """.strip(),
+        )
