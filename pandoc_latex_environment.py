@@ -1,59 +1,118 @@
 #!/usr/bin/env python
 
 """
-Pandoc filter for adding LaTeX environement on specific div
+Pandoc filter for adding LaTeX environement on specific div.
 """
 
-from pandocfilters import toJSONFilters, stringify, RawBlock, Para
+from panflute import Div, RawBlock, convert_text, run_filter  # type: ignore
 
-import re
 
-def environment(key, value, format, meta):
-    # Is it a div and the right format?
-    if key == 'Div' and format in ['latex', 'beamer']:
+def latex(elem, environment, title, identifier):
+    """
+    Generate the LaTeX code.
 
-        # Get the attributes
-        [[id, classes, properties], content] = value
+    Arguments
+    ---------
+    elem
+        The current element
+    environment
+        The environment to add
+    title
+        The environment title
+    identifier
+        The environment identifier
 
-        currentClasses = set(classes)
+    Returns
+    -------
+        A list of pandoc elements.
+    """
+    if identifier:
+        label = "\n\\label{" + identifier + "}"
+    else:
+        label = ""
 
-        for environment, definedClasses in getDefined(meta).items():
-            # Is the classes correct?
-            if currentClasses >= definedClasses:
-                if id != '':
-                    label = '\n\\label{' + id + '}'
+    return [
+        RawBlock(f"\\begin{{{environment}}}{title}{label}", "tex"),
+        elem,
+        RawBlock(f"\\end{{{environment}}}", "tex"),
+    ]
+
+
+def prepare(doc):
+    """
+    Prepare the document.
+
+    Arguments
+    ---------
+    doc
+        The pandoc document
+    """
+    # Prepare the definitions
+    doc.defined = {}
+
+    # Get the meta data
+    meta = doc.get_metadata("pandoc-latex-environment")
+
+    if isinstance(meta, dict):
+        # Loop on all definitions
+        for key, definition in meta.items():
+            # Verify the definition
+            if isinstance(definition, list):
+                doc.defined[key] = frozenset(definition)
+
+
+def transform(elem, doc):
+    """
+    Transform div element.
+
+    Arguments
+    ---------
+    elem
+        current element
+    doc
+        pandoc document
+
+    Returns
+    -------
+        A list of pandoc elements or None.
+    """
+    if doc.format in ("latex", "beamer") and isinstance(elem, Div):
+        classes = frozenset(elem.classes)
+
+        # Loop on all fontsize definition
+        for key, definition in doc.defined.items():
+            # Are the classes correct?
+            if classes >= definition:
+                if "title" in elem.attributes:
+                    escaped = elem.attributes["title"].translate(
+                        str.maketrans({"{": r"\{", "}": r"\}", "%": r"\%"})
+                    )
+                    title = f"{{{convert_text(escaped, output_format='latex')}}}"
                 else:
-                    label = ''
+                    title = ""
 
-                currentProperties = dict(properties)
-                if 'title' in currentProperties:
-                    title = '[' + currentProperties['title'] + ']'
-                else:
-                    title = ''
-                
-                before = RawBlock('tex', '\\begin{' + environment + '}' + title + label)
-                after = RawBlock('tex', '\\end{' + environment + '}')
+                identifier = elem.identifier
+                elem.identifier = ""
 
-                value[1] = [before] + content + [after]
-                break
+                return latex(elem, key, title, identifier)
+    return None
 
-def getDefined(meta):
-    # Return the latex-environment defined in the meta
-    if not hasattr(getDefined, 'value'):
-        getDefined.value = {}
-        if 'pandoc-latex-environment' in meta and meta['pandoc-latex-environment']['t'] == 'MetaMap':
-            for environment, classes in meta['pandoc-latex-environment']['c'].items():
-                if classes['t'] == 'MetaList':
-                    getDefined.value[environment] = []
-                    for klass in classes['c']:
-                        string = stringify(klass)
-                        if re.match('^[a-zA-Z][\w.:-]*$', string):
-                            getDefined.value[environment].append(string)
-                    getDefined.value[environment] = set(getDefined.value[environment])
-    return getDefined.value
 
-def main():
-    toJSONFilters([environment])
+def main(doc=None):
+    """
+    Convert the pandoc document.
 
-if __name__ == '__main__':
+    Arguments
+    ---------
+    doc
+        pandoc document
+
+    Returns
+    -------
+        The modified pandoc document.
+    """
+    return run_filter(transform, doc=doc, prepare=prepare)
+
+
+if __name__ == "__main__":
     main()
