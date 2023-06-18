@@ -4,12 +4,12 @@
 
 [tool.poetry]
     name = "pandoc-latex-environment"
-    version = "1.1.6.1"
+    version = "1.1.6.2"
     description="A pandoc filter for adding LaTeX environement on specific div"
     authors = ["Christophe Demko <chdemko@gmail.com>"]
     license = "BSD-3-Clause"
     readme = "README.md"
-    homepage="https://github.com/chdemko/pandoc-latex-french-spaces"
+    homepage="https://github.com/chdemko/pandoc-latex-environment"
     keywords=["pandoc", "filters", "latex", "environment"]
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
