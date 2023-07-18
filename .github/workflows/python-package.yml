@@ -16,7 +16,7 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10", "3.11"]
         poetry-version: ["1.5.1"]
-        pandoc-version: ["3.1.3"]
+        pandoc-version: ["3.1.5"]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -42,7 +42,7 @@ jobs:
       matrix:
         python-version: ["3.11"]
         poetry-version: ["1.2.2", "1.3.2", "1.4.2", "1.5.1"]
-        pandoc-version: ["3.1.3"]
+        pandoc-version: ["3.1.5"]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -68,7 +68,7 @@ jobs:
       matrix:
         python-version: ["3.11"]
         poetry-version: ["1.5.1"]
-        pandoc-version: ["2.11.4", "2.12", "2.13", "2.14.2", "2.15", "2.16.2", "2.17.1.1", "2.18", "2.19.2", "3.0.1", "3.1.3"]
+        pandoc-version: ["2.11.4", "2.12", "2.13", "2.14.2", "2.15", "2.16.2", "2.17.1.1", "2.18", "2.19.2", "3.0.1", "3.1.5"]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -122,8 +122,8 @@ jobs:
         poetry-version: '1.5.1'
     - name: Install dependencies
       run: |
-        wget https://github.com/jgm/pandoc/releases/download/3.1.3/pandoc-3.1.3-1-amd64.deb
-        sudo dpkg -i ./pandoc-3.1.3-1-amd64.deb
+        wget https://github.com/jgm/pandoc/releases/download/3.1.5/pandoc-3.1.5-1-amd64.deb
+        sudo dpkg -i ./pandoc-3.1.5-1-amd64.deb
         poetry install
     - name: Test
       env:
