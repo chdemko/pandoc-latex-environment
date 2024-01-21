@@ -5,20 +5,20 @@ name: Python package
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   python:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
-        poetry-version: ["1.5.1"]
-        pandoc-version: ["3.1.6"]
+        python-version: ['3.9', '3.10', '3.11', 3.12]
+        poetry-version: [1.7.1]
+        pandoc-version: [3.1.11.1]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -40,11 +40,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11"]
-        poetry-version: ["1.2.2", "1.3.2", "1.4.2", "1.5.1"]
-        pandoc-version: ["3.1.6"]
+        python-version: ['3.12']
+        poetry-version: [1.2.2, 1.3.2, 1.4.2, 1.5.1, 1.6.1, 1.7.1]
+        pandoc-version: [3.1.11.1]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -66,11 +66,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11"]
-        poetry-version: ["1.5.1"]
-        pandoc-version: ["2.11.4", "2.12", "2.13", "2.14.2", "2.15", "2.16.2", "2.17.1.1", "2.18", "2.19.2", "3.0.1", "3.1.6"]
+        python-version: ['3.12']
+        poetry-version: [1.7.1]
+        pandoc-version: [2.11.4, '2.12', '2.13', 2.14.2, '2.15', 2.16.2, 2.17.1.1, '2.18', 2.19.2, 3.0.1, 3.1.11.1]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -91,15 +91,15 @@ jobs:
   style:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '3.12'
     - name: Set up Poetry
       uses: abatilo/actions-poetry@v2
       with:
-        poetry-version: '1.5.1'
+        poetry-version: 1.7.1
     - name: Install dependencies
       run: |
         poetry install
@@ -111,19 +111,19 @@ jobs:
   cov:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '3.12'
     - name: Set up Poetry
       uses: abatilo/actions-poetry@v2
       with:
-        poetry-version: '1.5.1'
+        poetry-version: 1.7.1
     - name: Install dependencies
       run: |
-        wget https://github.com/jgm/pandoc/releases/download/3.1.6/pandoc-3.1.6-1-amd64.deb
-        sudo dpkg -i ./pandoc-3.1.6-1-amd64.deb
+        wget https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-1-amd64.deb
+        sudo dpkg -i ./pandoc-3.1.11.1-1-amd64.deb
         poetry install
     - name: Test
       env:

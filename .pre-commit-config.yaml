@@ -1,0 +1,82 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+  - id: check-toml
+  - id: check-yaml
+
+- repo: https://gitlab.com/smop/pre-commit-hooks
+  rev: v1.0.0
+  hooks:
+  - id: check-poetry
+
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v2.10.0
+  hooks:
+  - id: pretty-format-toml
+    exclude: ^poetry.lock$
+    args: [--autofix, --no-sort]
+  - id: pretty-format-yaml
+    args: [--autofix]
+
+- repo: https://github.com/tox-dev/tox-ini-fmt
+  rev: 1.3.1
+  hooks:
+  - id: tox-ini-fmt
+
+- repo: https://github.com/ariebovenberg/slotscheck
+  rev: v0.17.0
+  hooks:
+  - id: slotscheck
+    language: system
+    exclude: ^(?!pandoc_latex_environment.py)
+
+- repo: https://github.com/dosisod/refurb
+  rev: v1.20.0
+  hooks:
+  - id: refurb
+
+- repo: https://github.com/isidentical/teyit
+  rev: 0.4.3
+  hooks:
+  - id: teyit
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.0.287
+  hooks:
+  - id: ruff
+    language: system
+    exclude: ^(?!pandoc_latex_environment.py)
+
+- repo: https://github.com/psf/black
+  rev: 23.7.0
+  hooks:
+  - id: black-jupyter
+    args: [--config=pyproject.toml, pandoc_latex_environment.py, tests]
+
+- repo: https://github.com/PyCQA/doc8/
+  rev: v1.1.1
+  hooks:
+  - id: doc8
+    args: [docs]
+
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.5.1
+  hooks:
+  - id: mypy
+    language: system
+    exclude: ^(?!pandoc_latex_environment.py)
+
+- repo: https://github.com/pycqa/flake8
+  rev: 6.1.0
+  hooks:
+  - id: flake8
+    language: system
+    exclude: ^(?!pandoc_latex_environment.py)
+
+- repo: https://github.com/pre-commit/mirrors-pylint
+  rev: v3.0.0a5
+  hooks:
+  - id: pylint
+    language: system
+    exclude: ^(?!pandoc_latex_environment.py)

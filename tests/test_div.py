@@ -25,7 +25,7 @@ class EnvironmentTest(TestCase):
 
     def test_simple(self):
         doc = EnvironmentTest.conversion(
-            """
+            """\
 ---                           
 pandoc-latex-environment:
   test: [class1, class2]
@@ -44,7 +44,7 @@ content
         )
         self.assertEqual(
             text,
-            """
+            """\
 \\begin{test}
 
 content
@@ -55,7 +55,7 @@ content
 
     def test_title(self):
         doc = EnvironmentTest.conversion(
-            """
+            """\
 ---
 pandoc-latex-environment:
   test: [class1, class2]
@@ -74,7 +74,7 @@ content
         )
         self.assertEqual(
             text,
-            """
+            """\
 \\begin{test}{My Title}
 
 content
@@ -104,7 +104,7 @@ content
         )
         self.assertEqual(
             text,
-            """
+            """\
 \\begin{test}{\\textbf{My Title}}
 
 content
@@ -115,7 +115,7 @@ content
 
     def test_id(self):
         doc = EnvironmentTest.conversion(
-            """
+            """\
 ---
 pandoc-latex-environment:
   test: ['class1', 'class2']
@@ -134,7 +134,7 @@ content
         )
         self.assertEqual(
             text,
-            """
+            """\
 \\begin{test}
 \\label{id1}
 
