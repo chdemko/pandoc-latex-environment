@@ -16,24 +16,23 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import importlib.metadata
 import os
 import sys
+
+from datetime import date
 
 sys.path.insert(0, os.path.abspath("../.."))
 
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
-# -- Project information -----------------------------------------------------
-
-project = "pandoc-latex-environment"
-copyright = "2016-2023, Christophe Demko"
-author = "Christophe Demko"
+project, release = os.popen("poetry version").readline().strip().split(" ")
+author = importlib.metadata.metadata(project)["Author"]
+year = date.today().year
+copyright = f"2018-{year}, {author}"
 
 # The short X.Y version
-version = "1.1"
-# The full version, including alpha/beta/rc tags
-release = "1.1.6.1"
-
+version = ".".join(release.split(".")[:2])
 
 # -- General configuration ---------------------------------------------------
 
@@ -45,9 +44,7 @@ needs_sphinx = "6.0"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-    'myst_parser'
-]
+extensions = ["myst_parser"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = []
@@ -57,8 +54,8 @@ templates_path = []
 #
 # source_suffix = ['.rst', '.md']
 source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
+    ".rst": "restructuredtext",
+    ".md": "markdown",
 }
 
 
@@ -75,7 +72,7 @@ language = "en"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['images']
+exclude_patterns = ["images"]
 
 # The name of the Pygments (syntax highlighting) style to use.
 # pygments_style = None
@@ -113,4 +110,3 @@ html_static_path = []
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
-
