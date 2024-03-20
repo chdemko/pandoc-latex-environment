@@ -29,7 +29,7 @@ format icon by [Picol](https://www.iconfinder.com/icons/103509/document_text_ico
 status icon by [Just Icon](https://www.iconfinder.com/icons/2672768/app_battery_essential_object_status_ui_ux_icon),
 code style icon by [Google Material Design icons](https://www.iconfinder.com/icons/352148/style_icon)
 
-*pandoc-latex-environment* is a [pandoc] filter for adding LaTeX environement on specific HTML `div` tags.
+*pandoc-latex-environment* is a [pandoc] filter for adding LaTeX environement on specific pandoc `div`.
 
 [pandoc]: http://pandoc.org/
 
