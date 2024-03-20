@@ -1,6 +1,10 @@
 [build-system]
+requires = [
+  "poetry-core>=1.2",
+  "poetry-dynamic-versioning>=1.0.0,<2.0.0",
+  "poeblix>=0.10,<1.0"
+]
 build-backend = "poetry_dynamic_versioning.backend"
-requires = ["poetry-core>=1.2", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 
 [tool.poetry]
 name = "pandoc-latex-environment"
@@ -40,50 +44,50 @@ packages = [{include = "pandoc_latex_environment.py"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-panflute = "^2.3.0"
+panflute = "^2.3.1"
 
 [tool.poetry.group.dev.dependencies]
 # Formatter
-black = "^23.12.1"
+black = "^24.3.0"
 darglint = "^1.8.1"
 # pre-commit
-pre-commit = "^3.6.0"
+pre-commit = "^3.6.2"
 # download files
 requests = "^2.31.0"
 # Style checkers
-doc8 = "^0.11.2"
-flake8 = "^6.1.0"
-flake8-annotations-complexity = "^0.0.7"
+doc8 = "^1.1.1"
+flake8 = "^7.0.0"
+flake8-annotations-complexity = "^0.0.8"
 flake8-black = "^0.3.6"
 flake8-blind-except = "^0.2.1"
-flake8-bugbear = "^23.12.2"
+flake8-bugbear = "^24.2.6"
 flake8-builtins = "^2.2.0"
 flake8-cognitive-complexity = "^0.1.0"
 flake8-comprehensions = "^3.14.0"
 flake8-docstrings = "^1.7.0"
 flake8-expression-complexity = "^0.0.11"
 flake8-fixme = "^1.1.1"
-flake8-functions = "^0.0.7"
+flake8-functions = "^0.0.8"
 flake8-import-order = "^0.18.2"
 flake8-mypy = "^17.8.0"
-flake8-pydocstyle = "^0.2.3"
-flake8-pyi = "^23.11.0"
+flake8-pydocstyle = "^0.2.4"
+flake8-pyi = "^24.3.0"
 flake8-pyproject = "^1.2.3"
 flake8-return = "^1.2.0"
-flake8-simplify = "^0.19.3"
+flake8-simplify = "^0.21.0"
 flake8-spellcheck = "^0.28.0"
 flake8-use-fstring = "^1.4"
-flake8-variables-names = "^0.0.5"
-mypy = "^1.8.0"
+flake8-variables-names = "^0.0.6"
+mypy = "^1.9.0"
 pep8-naming = "^0.13.3"
-pylint = {version = "^2.17.7", python = ">=3.9"}
+pylint = {version = "^3.1.0", python = ">=3.9"}
 # test
-tox = "^4.12.1"
-pytest = "^7.4.4"
+tox = "^4.14.1"
+pytest = "^8.1.1"
 pytest-cov = "^4.1.0"
-refurb = {version = "^1.27.0", python = ">=3.10"}
-ruff = "^0.0.254"
-slotscheck = "^0.16.5"
+refurb = {version = "^2.0.0", python = ">=3.10"}
+ruff = "^0.3.2"
+slotscheck = "^0.17.3"
 teyit = {version = "^0.4.3", python = ">=3.9"}
 
 [tool.poetry.group.docs]
@@ -91,8 +95,8 @@ optional = true
 
 [tool.poetry.group.docs.dependencies]
 myst-parser = "^2.0"
-sphinx = "^7.2"
-sphinx_rtd_theme = "^2.0"
+sphinx = "^7.2.6"
+sphinx_rtd_theme = "^2.0.0"
 
 [tool.poetry.scripts]
 pandoc-latex-environment = "pandoc_latex_environment:main"
@@ -139,6 +143,12 @@ ignore = [
 ]
 max-line-length = 88
 statistics = true
+
+[tool.pydoclint]
+style = "numpy"
+
+[tool.pydocstyle]
+convention = "numpy"
 
 [tool.mypy]
 disallow_any_generics = true
@@ -190,6 +200,3 @@ format-jinja = """
         {{- serialize_pep440(base, stage, revision, epoch=epoch, post=distance, dev=0, metadata=[commit]) -}}
     {%- endif -%}
 """
-
-[tool.pydocstyle]
-convention = "numpy"

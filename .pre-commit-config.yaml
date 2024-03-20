@@ -1,21 +1,23 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.4.0
+  rev: v4.5.0
   hooks:
   - id: check-toml
   - id: check-yaml
 
-- repo: https://gitlab.com/smop/pre-commit-hooks
-  rev: v1.0.0
+- repo: https://github.com/python-poetry/poetry
+  rev: 1.8.0
   hooks:
-  - id: check-poetry
+  - id: poetry-check
+  - id: poetry-lock
+  - id: poetry-install
 
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.10.0
+  rev: v2.12.0
   hooks:
   - id: pretty-format-toml
-    exclude: ^poetry.lock$
     args: [--autofix, --no-sort]
+    exclude: ^poetry.lock$
   - id: pretty-format-yaml
     args: [--autofix]
 
@@ -25,14 +27,14 @@ repos:
   - id: tox-ini-fmt
 
 - repo: https://github.com/ariebovenberg/slotscheck
-  rev: v0.17.0
+  rev: v0.17.3
   hooks:
   - id: slotscheck
     language: system
     exclude: ^(?!pandoc_latex_environment.py)
 
 - repo: https://github.com/dosisod/refurb
-  rev: v1.20.0
+  rev: v2.0.0
   hooks:
   - id: refurb
 
@@ -42,14 +44,14 @@ repos:
   - id: teyit
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.0.287
+  rev: v0.3.3
   hooks:
   - id: ruff
     language: system
     exclude: ^(?!pandoc_latex_environment.py)
 
 - repo: https://github.com/psf/black
-  rev: 23.7.0
+  rev: 24.3.0
   hooks:
   - id: black-jupyter
     args: [--config=pyproject.toml, pandoc_latex_environment.py, tests]
@@ -61,22 +63,22 @@ repos:
     args: [docs]
 
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.5.1
+  rev: v1.9.0
   hooks:
   - id: mypy
     language: system
     exclude: ^(?!pandoc_latex_environment.py)
 
 - repo: https://github.com/pycqa/flake8
-  rev: 6.1.0
+  rev: 7.0.0
   hooks:
   - id: flake8
     language: system
     exclude: ^(?!pandoc_latex_environment.py)
 
-- repo: https://github.com/pre-commit/mirrors-pylint
-  rev: v3.0.0a5
+- repo: https://github.com/pylint-dev/pylint
+  rev: v3.1.0
   hooks:
   - id: pylint
     language: system
-    exclude: ^(?!pandoc_latex_environment.py)
+    exclude: ^(?!galactic/algebras/)
