@@ -29,14 +29,16 @@ format icon by [Picol](https://www.iconfinder.com/icons/103509/document_text_ico
 status icon by [Just Icon](https://www.iconfinder.com/icons/2672768/app_battery_essential_object_status_ui_ux_icon),
 code style icon by [Google Material Design icons](https://www.iconfinder.com/icons/352148/style_icon)
 
-*pandoc-latex-environment* is a [pandoc] filter for adding LaTeX environement on specific pandoc `div`.
+*pandoc-latex-environment* is a [pandoc] filter for adding LaTeX environement
+on specific pandoc `div`.
 
 [pandoc]: http://pandoc.org/
 
 Instructions
 ------------
 
-*pandoc-latex-environment* requires [python], a programming language that comes pre-installed on linux and Mac OS X, and which is easily installed [on Windows].
+*pandoc-latex-environment* requires [python], a programming language that comes
+pre-installed on linux and Mac OS X, and which is easily installed [on Windows].
 
 Install *pandoc-latex-environment* using the bash command
 
@@ -50,7 +52,9 @@ To upgrade to the most recent release, use
 $ pipx upgrade pandoc-latex-environment
 ~~~
 
-`pipx` is a script to install and run python applications in isolated environments from the Python Package Index, [PyPI]. It can be installed using instructions given [here](https://pipx.pypa.io/stable/).
+`pipx` is a script to install and run python applications in isolated
+environments from the Python Package Index, [PyPI]. It can be installed
+using instructions given [here](https://pipx.pypa.io/stable/).
 
 [python]: https://www.python.org/
 [on Windows]: https://www.python.org/downloads/windows/
@@ -60,6 +64,7 @@ $ pipx upgrade pandoc-latex-environment
 Getting Help
 ------------
 
-If you have any difficulties with *pandoc-latex-environment*, please feel welcome to [file an issue] on github so that we can help.
+If you have any difficulties with *pandoc-latex-environment*,
+please feel welcome to [file an issue] on github so that we can help.
 
 [file an issue]: https://github.com/chdemko/pandoc-latex-environment/issues
