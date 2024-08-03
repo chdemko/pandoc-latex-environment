@@ -60,7 +60,7 @@ repos:
   rev: v1.1.1
   hooks:
   - id: doc8
-    args: [docs, -e, .md, -e, .rst]
+    args: [docs, README.md, -e, .md, -e, .rst]
 
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.11.1
