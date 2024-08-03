@@ -3,11 +3,17 @@
 """
 Pandoc filter for adding LaTeX environement on specific div.
 """
+from __future__ import annotations
 
-from panflute import Div, RawBlock, convert_text, run_filter
+from panflute import Div, Doc, Element, RawBlock, convert_text, run_filter
 
 
-def latex(elem, environment, title, identifier):
+def latex(
+    elem: Element,
+    environment: str,
+    title: str,
+    identifier: str,
+) -> list[Element]:
     """
     Generate the LaTeX code.
 
@@ -24,6 +30,7 @@ def latex(elem, environment, title, identifier):
 
     Returns
     -------
+    list[Element]
         A list of pandoc elements.
     """
     if identifier:
@@ -38,7 +45,7 @@ def latex(elem, environment, title, identifier):
     ]
 
 
-def prepare(doc):
+def prepare(doc: Doc) -> None:
     """
     Prepare the document.
 
@@ -61,7 +68,7 @@ def prepare(doc):
                 doc.defined[key] = frozenset(definition)
 
 
-def transform(elem, doc):
+def transform(elem: Element, doc: Doc) -> list[Element] | None:
     """
     Transform div element.
 
@@ -74,6 +81,7 @@ def transform(elem, doc):
 
     Returns
     -------
+    list[Element] | None
         A list of pandoc elements or None.
     """
     if doc.format in ("latex", "beamer") and isinstance(elem, Div):
@@ -98,7 +106,7 @@ def transform(elem, doc):
     return None
 
 
-def main(doc=None):
+def main(doc: Doc | None = None) -> Doc:
     """
     Convert the pandoc document.
 
@@ -109,6 +117,7 @@ def main(doc=None):
 
     Returns
     -------
+    Doc
         The modified pandoc document.
     """
     return run_filter(transform, doc=doc, prepare=prepare)
