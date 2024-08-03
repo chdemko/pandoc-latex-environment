@@ -1,16 +1,6 @@
-# This Python file uses the following encoding: utf-8
-from unittest import TestCase
-from panflute import Div, Str, RawBlock
-
-
-import pandoc_latex_environment
-
-
-# This Python file uses the following encoding: utf-8
-
 from unittest import TestCase
 
-from panflute import convert_text, Para, Image
+from panflute import convert_text
 
 import pandoc_latex_environment
 

@@ -8,12 +8,13 @@ $ pandoc --filter pandoc-latex-environment
 
 ## Explanation
 
-In the metadata block, specific set of classes can be defined to surround HTML `div` tag by a LaTeX environment.
+In the metadata block, specific set of classes can be defined to surround
+HTML `div` tag by a LaTeX environment.
 
 Thus,
 
 ~~~markdown
----                           
+---
 pandoc-latex-environment:
   test: [class1, class2]
 ---
