@@ -5,7 +5,17 @@ Pandoc filter for adding LaTeX environement on specific div.
 """
 from __future__ import annotations
 
-from panflute import Div, Doc, Element, RawBlock, convert_text, run_filter
+from panflute import (
+    Div,
+    Doc,
+    Element,
+    Para,
+    Plain,
+    RawBlock,
+    RawInline,
+    convert_text,
+    run_filter,
+)
 
 
 def latex(
@@ -13,7 +23,7 @@ def latex(
     environment: str,
     title: str,
     identifier: str,
-) -> list[Element]:
+) -> list[Element] | None:
     """
     Generate the LaTeX code.
 
@@ -30,13 +40,34 @@ def latex(
 
     Returns
     -------
-    list[Element]
+    list[Element] | None
         A list of pandoc elements.
     """
     if identifier:
-        label = "\n\\label{" + identifier + "}"
+        label = f"\n\\label{{{identifier}}}"
     else:
         label = ""
+
+    first = elem.content[0]
+    while isinstance(first, Div):
+        first = first.content[0]
+
+    last = elem.content[-1]
+    while isinstance(last, Div):
+        last = last.content[-1]
+
+    if isinstance(first, (Para, Plain)):
+        first.content.insert(
+            0,
+            RawInline(f"\\begin{{{environment}}}{title}{label}\n", "tex"),
+        )
+        if isinstance(last, (Para, Plain)):
+            last.content.append(RawInline(f"\n\\end{{{environment}}}", "tex"))
+            return None
+        return [elem, RawBlock(f"\\end{{{environment}}}", "tex")]
+    if isinstance(last, (Para, Plain)):
+        last.content.append(RawInline(f"\n\\end{{{environment}}}", "tex"))
+        return [RawBlock(f"\\begin{{{environment}}}{title}{label}", "tex"), elem]
 
     return [
         RawBlock(f"\\begin{{{environment}}}{title}{label}", "tex"),
