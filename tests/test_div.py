@@ -36,8 +36,153 @@ content
             text,
             """\
 \\begin{test}
-
 content
+\\end{test}
+            """.strip(),
+        )
+
+    def test_div(self):
+        doc = EnvironmentTest.conversion(
+            """\
+---                           
+pandoc-latex-environment:
+  test: [class1, class2]
+---
+::: {.class1 .class2}
+::: {.class}
+content
+:::
+:::
+            """.strip(),
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """\
+\\begin{test}
+content
+\\end{test}
+            """.strip(),
+        )
+
+    def test_itemize0(self):
+        doc = EnvironmentTest.conversion(
+            """\
+---                           
+pandoc-latex-environment:
+  test: [class1, class2]
+---
+::: {.class1 .class2}
+* a
+* b
+:::
+            """.strip(),
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """\
+\\begin{test}
+
+\\begin{itemize}
+\\tightlist
+\\item
+  a
+\\item
+  b
+\\end{itemize}
+
+\\end{test}
+            """.strip(),
+        )
+
+    def test_itemize1(self):
+        doc = EnvironmentTest.conversion(
+            """\
+---                           
+pandoc-latex-environment:
+  test: [class1, class2]
+---
+::: {.class1 .class2}
+* a
+* b
+
+Test
+:::
+            """.strip(),
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """\
+\\begin{test}
+
+\\begin{itemize}
+\\tightlist
+\\item
+  a
+\\item
+  b
+\\end{itemize}
+
+Test
+\\end{test}
+            """.strip(),
+        )
+
+    def test_itemize2(self):
+        doc = EnvironmentTest.conversion(
+            """\
+---                           
+pandoc-latex-environment:
+  test: [class1, class2]
+---
+::: {.class1 .class2}
+Test
+
+* a
+* b
+:::
+            """.strip(),
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """\
+\\begin{test}
+Test
+
+\\begin{itemize}
+\\tightlist
+\\item
+  a
+\\item
+  b
+\\end{itemize}
 
 \\end{test}
             """.strip(),
@@ -66,9 +211,7 @@ content
             text,
             """\
 \\begin{test}{My Title}
-
 content
-
 \\end{test}
             """.strip(),
         )
@@ -96,9 +239,7 @@ content
             text,
             """\
 \\begin{test}{\\textbf{My Title}}
-
 content
-
 \\end{test}
             """.strip(),
         )
@@ -127,9 +268,7 @@ content
             """\
 \\begin{test}
 \\label{id1}
-
 content
-
 \\end{test}
             """.strip(),
         )
