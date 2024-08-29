@@ -97,7 +97,6 @@ optional = true
 myst-parser = "^2.0"
 Sphinx = "^7.2.6"
 sphinx-rtd-theme = "^2.0.0"
-sphinx-prompt = "^1.8.0"
 sphinx-copybutton = "^0.5.2"
 
 [tool.poetry.scripts]

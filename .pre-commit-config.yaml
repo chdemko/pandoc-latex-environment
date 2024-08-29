@@ -44,7 +44,7 @@ repos:
   - id: teyit
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.5.6
+  rev: v0.6.3
   hooks:
   - id: ruff
     language: system
@@ -63,14 +63,14 @@ repos:
     files: \.(rst|md)$
 
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.11.1
+  rev: v1.11.2
   hooks:
   - id: mypy
     language: system
     exclude: ^(?!pandoc_latex_environment/)
 
 - repo: https://github.com/pycqa/flake8
-  rev: 7.1.0
+  rev: 7.1.1
   hooks:
   - id: flake8
     language: system

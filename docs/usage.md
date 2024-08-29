@@ -2,8 +2,8 @@
 
 To apply the filter, use the following option with pandoc:
 
-~~~{prompt} bash
-pandoc --filter pandoc-latex-environment
+~~~shell-session
+$ pandoc --filter pandoc-latex-environment
 ~~~
 
 ## Explanation
@@ -27,9 +27,7 @@ will be rendered in LaTeX format as
 
 ~~~
 \begin{test}
-
 content
-
 \end{test}
 ~~~
 

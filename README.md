@@ -43,14 +43,14 @@ comes pre-installed on linux and Mac OS X, and which is easily installed
 
 Install *pandoc-latex-environment* using the bash command
 
-~~~{prompt} bash
-pipx install pandoc-latex-environment
+~~~shell-session
+$ pipx install pandoc-latex-environment
 ~~~
 
 To upgrade to the most recent release, use
 
-~~~{prompt} bash
-pipx upgrade pandoc-latex-environment
+~~~shell-session
+$ pipx upgrade pandoc-latex-environment
 ~~~
 
 `pipx` is a script to install and run python applications in isolated
