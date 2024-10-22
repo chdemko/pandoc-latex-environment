@@ -1,18 +1,17 @@
 [build-system]
-requires = [
-  "poetry-core>=1.2",
-  "poetry-dynamic-versioning>=1.0.0,<2.0.0"
-]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
-[tool.poetry]
+[project]
+dynamic = ["version"]
 name = "pandoc-latex-environment"
-version = "0.0.0.0"
 description = "A pandoc filter for adding LaTeX environement on specific div"
-authors = ["Christophe Demko <chdemko@gmail.com>"]
-license = "BSD-3-Clause"
 readme = "README.md"
-homepage = "https://github.com/chdemko/pandoc-latex-environment"
+requires-python = ">=3.10,<3.14"
+license = {text = "BSD-3-Clause"}
+license-files = {paths = ["LICENSE"]}
+authors = [{name = "Christophe Demko", email = "chdemko@gmail.com"}]
+maintainers = [{name = "Christophe Demko", email = "chdemko@gmail.com"}]
 keywords = ["pandoc", "filters", "latex", "environment"]
 # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
 classifiers = [
@@ -35,72 +34,124 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   # Natural language used
   "Natural Language :: English"
 ]
-packages = [{include = "pandoc_latex_environment/"}]
+dependencies = [
+  "panflute~=2.3"
+]
 
-[tool.poetry.dependencies]
-python = ">=3.10,<3.13"
-panflute = "^2.3.1"
+[project.urls]
+Homepage = "https://github.com/chdemko/pandoc-latex-environment"
+Documentation = "https://pandoc-latex-environment.readthedocs.io/"
+Repository = "https://github.com/chdemko/pandoc-latex-environment"
+Issues = "https://github.com/chdemko/pandoc-latex-environment/issues"
 
-[tool.poetry.group.dev.dependencies]
-# Tests
-tox = "^4.18.0"
-# pre-commit
-pre-commit = "^3.8.0"
-# pyupgrade
-pyupgrade = "^3.17.0"
-# Formatter
-black = {extras = ["jupyter"], version = "^24.8.0"}
-# Tests
-pytest = "^8.3.2"
-pytest-cov = "^4.1.0"
-# Style checkers
-doc8 = "^1.1.1"
-mypy = "^1.11.2"
-flake8 = "^7.1.1"
-flake8-pyproject = "^1.2.3"
-flake8-annotations-complexity = "^0.0.8"
-flake8-black = "^0.3.6"
-flake8-blind-except = "^0.2.1"
-flake8-bugbear = "^24.8.19"
-flake8-builtins = "^2.5.0"
-flake8-cognitive-complexity = "^0.1.0"
-flake8-comprehensions = "^3.15.0"
-flake8-docstrings = "^1.7.0"
-flake8-expression-complexity = "^0.0.11"
-flake8-fixme = "^1.1.1"
-flake8-functions = "^0.0.8"
-flake8-import-order = "^0.18.2"
-flake8-mypy = "^17.8.0"
-flake8-pyi = "^24.6.0"
-flake8-pydocstyle = "^0.2.4"
-flake8-return = "^1.2.0"
-flake8-simplify = "^0.21.0"
-flake8-spellcheck = "^0.28.0"
-flake8-use-fstring = "^1.4"
-flake8-variables-names = "^0.0.6"
-pep8-naming = "^0.13.3"
-pylint = "^3.2.6"
-ruff = "^0.6.0"
-darglint = "^1.8.1"
-pydoclint = {extras = ["flake8"], version = "^0.5.1"}
-teyit = "^0.4.3"
-slotscheck = "^0.17.3"
-refurb = {version = "^2.0.0", python = ">=3.10"}
-
-[tool.poetry.group.docs]
-optional = true
-
-[tool.poetry.group.docs.dependencies]
-myst-parser = "^2.0"
-Sphinx = "^7.2.6"
-sphinx-rtd-theme = "^2.0.0"
-sphinx-copybutton = "^0.5.2"
-
-[tool.poetry.scripts]
+[project.scripts]
 pandoc-latex-environment = "pandoc_latex_environment:main"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+version_scheme = "no-guess-dev"
+local_scheme = "no-local-version"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pandoc_latex_environment"]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.10", "3.11", "3.12", "3.13"]
+
+[tool.hatch.envs.hatch-static-analysis]
+dependencies = [
+  # Types
+  "types-PyYAML~=6.0",
+  # Formatter
+  "black[jupyter]~=24.10",
+  # Style checkers
+  "doc8~=1.1",
+  "mypy~=1.12",
+  "flake8~=7.1",
+  "flake8-pyproject~=1.2",
+  "flake8-annotations-complexity~=0.0",
+  "flake8-black~=0.3",
+  "flake8-blind-except~=0.2",
+  "flake8-bugbear~=24.8",
+  "flake8-builtins~=2.5",
+  "flake8-cognitive-complexity~=0.1",
+  "flake8-comprehensions~=3.15",
+  "flake8-docstrings~=1.7",
+  "flake8-expression-complexity~=0.0",
+  "flake8-fixme~=1.1",
+  "flake8-functions~=0.0",
+  "flake8-import-order~=0.18",
+  "flake8-mypy~=17.8",
+  "flake8-pyi~=24.9",
+  "flake8-pydocstyle~=0.2",
+  "flake8-return~=1.2",
+  "flake8-simplify~=0.21",
+  "flake8-spellcheck~=0.28",
+  "flake8-use-fstring~=1.4",
+  "flake8-variables-names~=0.0",
+  "pep8-naming~=0.14",
+  "darglint~=1.8.1",
+  "pydoclint[flake8]~=0.5",
+  "teyit~=0.4",
+  "refurb~=2.0",
+  "ruff~=0.7"
+]
+
+[tool.hatch.envs.hatch-static-analysis.scripts]
+format-check = [
+  "black --check --diff {args:src docs}",
+  "doc8 -q {args:docs README.md} -e .rst -e .md"
+]
+format-fix = [
+  "black {args:src docs}"
+]
+lint-check = [
+  "refurb {args:src docs}",
+  "ruff check {args:src docs}",
+  "teyit --show-stats --fail-on-change {args:tests}",
+  "flake8 {args:src docs}"
+]
+lint-fix = [
+  "ruff check --fix {args:src docs}"
+]
+
+[tool.hatch.envs.lint]
+dependencies = [
+  "slotscheck~=0.19",
+  "pylint~=3.3"
+]
+
+[tool.hatch.envs.lint.scripts]
+check = [
+  "slotscheck {args:src}",
+  "pylint {args:src}"
+]
+
+[tool.hatch.envs.docs]
+dependencies = [
+  "myst-parser~=4.0",
+  "Sphinx~=8.1",
+  "sphinx-rtd-theme~=3.0",
+  "sphinx-copybutton~=0.5"
+]
+
+[tool.hatch.envs.docs.scripts]
+build = "sphinx-build docs {args:build/sphinx/html}"
+
+[tool.pytest.ini_options]
+consider_namespace_packages = true
+pythonpath = ["src"]
+
+[tool.ruff]
+# Allow lines to be as long as 88.
+line-length = 88
+target-version = "py310"
 
 [tool.flake8]
 # flake8-docstrings
@@ -109,42 +160,48 @@ docstring-convention = "numpy"
 docstring_style = "numpy"
 exclude = "*.pyi"
 ignore = [
-  # One-line docstring should fit on one line with quotes
-  "D200",
-  # Missing docstring in public method
-  "D105",
-  # line break before binary operator
-  "W503",
-  # Returning Any from function declared to return "..."
-  "T484",
-  # Multi-line construct missing trailing comma
-  "S101",
-  # Found ... errors in ... file (checked ... source file)
-  "T499",
+  # class attribute is shadowing a Python builtin
+  "A003",
   # Cognitive complexity is too high
   "CCR001",
   # Function "__init__" has ... arguments that exceeds max allowed 6
   "CFQ002",
-  # whitespace before ":"
-  "E203",
   # Function attributes has length ... that exceeds max allowed length 100
   "CFQ001",
   # Function ... has ... returns that exceeds max allowed 3
   "CFQ004",
-  # fixme found (TODO)
-  "T101",
-  # SIM119 Use a dataclass for "class ..."
-  "SIM119",
-  # Spelling error in name (e.g. variable, function, class)
-  "SC200",
-  # undefined name TODO: remove
-  "F821",
+  # Missing docstring in public method
+  "D105",
+  # One-line docstring should fit on one line with quotes
+  "D200",
   # The docstring parameter type doesn't match function.
   "DAR103",
   # Class docstring contains fewer class attributes than actual class attributes.
   "DOC601",
   # Class docstring attributes are different from actual class attributes.
-  "DOC603"
+  "DOC603",
+  # whitespace before ":"
+  "E203",
+  # Expression is too complex
+  "ECE001",
+  # undefined name TODO: remove
+  "F821",
+  # Multi-line construct missing trailing comma
+  "S101",
+  # Spelling error in name (e.g. variable, function, class)
+  "SC200",
+  # SIM119 Use a dataclass for "class ..."
+  "SIM119",
+  # fixme found (TODO)
+  "T101",
+  # Returning Any from function declared to return "..."
+  "T484",
+  # Found ... errors in ... file (checked ... source file)
+  "T499",
+  # variable names that shadow builtins are not allowed
+  "VNE003",
+  # line break before binary operator
+  "W503"
 ]
 max-line-length = 88
 statistics = true
@@ -170,40 +227,14 @@ warn_return_any = true
 # equivalent to --strict option
 warn_unused_configs = true
 warn_unused_ignores = true
+mypy_path = "src"
 
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 module = "panflute.*"
 
-[tool.poetry-dynamic-versioning]
-enable = true
-# tag regex
-pattern = """(?x)                                                (?# ignore whitespace)
-    ^v?((?P<epoch>\\d+)!)?(?P<base>\\d+(\\.\\d+)*)               (?# 1.2.3 or 1!2000.1.2)
-    ([-._]?((?P<stage>[a-zA-Z]+)[-._]?(?P<revision>\\d+)?))?     (?# b0)
-    (\\+(?P<tagged_metadata>.+))?$                               (?# +linux)
-"""
-# version format
-format-jinja = """
-    {%- set epoch = epoch if epoch|length else none -%}
-    {%- if distance == 0 -%}
-        {{- serialize_pep440(base, stage, revision, epoch=epoch) -}}
-    {%- elif stage is not none -%}
-        {{- serialize_pep440(base, stage, revision if revision else 0, epoch=epoch, post=distance, dev=0, metadata=[commit]) -}}
-    {%- elif branch is none -%}
-        {{- serialize_pep440(base, stage, revision, epoch=epoch, post=distance, dev=0, metadata=[commit]) -}}
-    {%- elif branch.startswith('hotfix/') -%}
-        {{- serialize_pep440(branch['hotfix/' | length:], 'a', 0, epoch=epoch, dev=distance, metadata=[commit]) -}}
-    {%- elif branch.startswith('release/') -%}
-        {{- serialize_pep440(branch['release/' | length:], 'a', 0, epoch=epoch, dev=distance, metadata=[commit]) -}}
-    {%- elif branch.startswith('feature/') -%}
-        {{- serialize_pep440(base, stage, revision, epoch=epoch, post=distance, dev=0, metadata=[branch_escaped['feature' | length:][:16], commit]) -}}
-    {%- elif branch != 'develop' -%}
-        {{- serialize_pep440(base, stage, revision, epoch=epoch, post=distance, dev=0, metadata=[branch_escaped[:16], commit]) -}}
-    {%- else -%}
-        {{- serialize_pep440(base, stage, revision, epoch=epoch, post=distance, dev=0, metadata=[commit]) -}}
-    {%- endif -%}
-"""
-
 [tool.pydocstyle]
 convention = "numpy"
+
+[tool.coverage.run]
+source = ["src"]
