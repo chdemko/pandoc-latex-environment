@@ -14,7 +14,7 @@ with Path("..", "pyproject.toml").resolve().open("rb") as f:
 version = os.popen("hatch version").readline().strip()  # noqa: S605, S607
 year = datetime.datetime.now(tz=datetime.UTC).date().year
 # noinspection PyShadowingBuiltins
-copyright = f"2019-{year}, {author}"  # noqa: A001
+copyright = f"2016-{year}, {author}"  # noqa: A001
 
 python_path = str(Path("..").resolve())
 sys.path.insert(0, python_path)
