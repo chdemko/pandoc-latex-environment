@@ -24,11 +24,6 @@ Installation
 [![Source Rank](https://img.shields.io/librariesio/sourcerank/pypi/pandoc-latex-environment.svg?logo=koding&logoColor=white)](https://libraries.io/pypi/pandoc-latex-environment)
 [![Docs](https://img.shields.io/readthedocs/pandoc-latex-environment.svg?logo=read-the-docs&logoColor=white)](http://pandoc-latex-environment.readthedocs.io/en/latest/)
 
-license icon by [Daniel Bruce](https://www.iconfinder.com/icons/216659/license_icon),
-format icon by [Picol](https://www.iconfinder.com/icons/103509/document_text_icon),
-status icon by [Just Icon](https://www.iconfinder.com/icons/2672768/app_battery_essential_object_status_ui_ux_icon),
-code style icon by [Google Material Design icons](https://www.iconfinder.com/icons/352148/style_icon)
-
 *pandoc-latex-environment* is a [pandoc] filter for adding LaTeX environement
 on specific pandoc `div`.
 
