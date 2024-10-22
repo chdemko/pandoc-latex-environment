@@ -14,122 +14,93 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12']
-        poetry-version: [1.8.3]
-        pandoc-version: ['3.3']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
+        pandoc-version: ['3.5']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Set up Poetry ${{ matrix.poetry-version }}
-      uses: abatilo/actions-poetry@v2
-      with:
-        poetry-version: ${{ matrix.poetry-version }}
+    - name: Install Hatch
+      run: pipx install hatch
     - name: Install dependencies
       run: |
         wget https://github.com/jgm/pandoc/releases/download/${{ matrix.pandoc-version }}/pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
         sudo dpkg -i ./pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
-        poetry install
-    - name: Test with tox
+    - name: Test
       run: |
-        poetry run tox -e py
-
-  poetry:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.12']
-        poetry-version: [1.2.2, 1.3.2, 1.4.2, 1.5.1, 1.6.1, 1.7.1, 1.8.3]
-        pandoc-version: ['3.3']
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Set up Poetry ${{ matrix.poetry-version }}
-      uses: abatilo/actions-poetry@v2
-      with:
-        poetry-version: ${{ matrix.poetry-version }}
-    - name: Install dependencies
-      run: |
-        wget https://github.com/jgm/pandoc/releases/download/${{ matrix.pandoc-version }}/pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
-        sudo dpkg -i ./pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
-        poetry install
-    - name: Test with tox
-      run: |
-        poetry run tox -e py
+        hatch test -py ${{ matrix.python-version }}
 
   pandoc:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ['3.12']
-        poetry-version: [1.8.3]
-        pandoc-version: [2.11.4, '2.12', '2.13', 2.14.2, '2.15', 2.16.2, 2.17.1.1, '2.18', 2.19.2, 3.0.1, 3.1.13, 3.2.1, '3.3']
+        pandoc-version: [2.11.4, '2.12', '2.13', 2.14.2, '2.15', 2.16.2, 2.17.1.1, '2.18', 2.19.2, 3.0.1, 3.1.13, 3.2.1, '3.3', '3.4', '3.5']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Set up Poetry ${{ matrix.poetry-version }}
-      uses: abatilo/actions-poetry@v2
-      with:
-        poetry-version: ${{ matrix.poetry-version }}
+    - name: Install Hatch
+      run: pipx install hatch
     - name: Install dependencies
       run: |
         wget https://github.com/jgm/pandoc/releases/download/${{ matrix.pandoc-version }}/pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
         sudo dpkg -i ./pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
-        poetry install
-    - name: Test with tox
+    - name: Test
       run: |
-        poetry run tox -e py
+        hatch test
 
   style:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12']
+        pandoc-version: ['3.5']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
-    - name: Set up Poetry
-      uses: abatilo/actions-poetry@v2
-      with:
-        poetry-version: 1.8.3
+        python-version: ${{ matrix.python-version }}
+    - name: Install Hatch
+      run: pipx install hatch
     - name: Install dependencies
       run: |
-        poetry install
-    - name: Test with tox
+        wget https://github.com/jgm/pandoc/releases/download/${{ matrix.pandoc-version }}/pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
+        sudo dpkg -i ./pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
+    - name: Static check
       run: |
-        poetry run tox -e style
-        poetry run tox -e linter
+        hatch fmt --check
+    - name: Dynamic check
+      run: |
+        hatch run lint:check
 
   cov:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12']
+        pandoc-version: ['3.5']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
-    - name: Set up Poetry
-      uses: abatilo/actions-poetry@v2
-      with:
-        poetry-version: 1.8.3
+        python-version: ${{ matrix.python-version }}
+    - name: Install Hatch
+      run: pipx install hatch
     - name: Install dependencies
       run: |
-        wget https://github.com/jgm/pandoc/releases/download/3.3/pandoc-3.3-1-amd64.deb
-        sudo dpkg -i ./pandoc-3.3-1-amd64.deb
-        poetry install
+        wget https://github.com/jgm/pandoc/releases/download/${{ matrix.pandoc-version }}/pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
+        sudo dpkg -i ./pandoc-${{ matrix.pandoc-version }}-1-amd64.deb
     - name: Test
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      run: |
-        poetry run tox -e coverage
-        poetry run pip install coveralls
-        poetry run coveralls
-
+      run: |-
+        hatch test --cover
+        hatch run pip install coveralls
+        hatch run coveralls

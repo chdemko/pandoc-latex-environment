@@ -9,24 +9,10 @@ build:
   os: ubuntu-22.04
   tools:
     python: '3.11'
-  jobs:
-    post_create_environment:
-    # Install poetry
-    # https://python-poetry.org/docs/#installing-manually
-    - pip install poetry
-    - poetry self add "poetry-dynamic-versioning[plugin]"
-    # Tell poetry to not use a virtual environment
-    - poetry config virtualenvs.create false
-    post_install:
-    # Install dependencies with 'docs' dependency group
-    # https://python-poetry.org/docs/managing-dependencies/#dependency-groups
-    # VIRTUAL_ENV needs to be set manually for now.
-    # See https://github.com/readthedocs/readthedocs.org/pull/11152/
-    - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --with docs
-
-# Build documentation in the "docs/" directory with Sphinx
-sphinx:
-  configuration: docs/conf.py
+  commands:
+  - git fetch --unshallow || true
+  - pip install hatch
+  - hatch run docs:build $READTHEDOCS_OUTPUT/html/
 
 # Optionally build your docs in additional formats such as PDF and ePub
 formats:
