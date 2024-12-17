@@ -72,7 +72,7 @@ dependencies = [
   "black[jupyter]~=24.10",
   # Style checkers
   "doc8~=1.1",
-  "mypy~=1.12",
+  "mypy~=1.13",
   "flake8~=7.1",
   "flake8-pyproject~=1.2",
   "flake8-annotations-complexity~=0.0",
@@ -100,7 +100,7 @@ dependencies = [
   "pydoclint[flake8]~=0.5",
   "teyit~=0.4",
   "refurb~=2.0",
-  "ruff~=0.7"
+  "ruff~=0.8"
 ]
 
 [tool.hatch.envs.hatch-static-analysis.scripts]
@@ -212,21 +212,23 @@ arg-type-hints-in-docstring = false
 style = "numpy"
 
 [tool.mypy]
-disallow_any_generics = true
-disallow_subclassing_any = true
-# disallow_untyped_calls = true
-# disallow_untyped_defs = true
-# disallow_incomplete_defs = true
-# check_untyped_defs = true
-disallow_untyped_decorators = true
 ignore_missing_imports = true
 no_implicit_optional = true
-no_implicit_reexport = true
-warn_redundant_casts = true
-warn_return_any = true
 # equivalent to --strict option
 warn_unused_configs = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+warn_redundant_casts = true
 warn_unused_ignores = true
+warn_return_any = true
+no_implicit_reexport = true
+strict_equality = true
+extra_checks = true
 mypy_path = "src"
 
 [[tool.mypy.overrides]]
