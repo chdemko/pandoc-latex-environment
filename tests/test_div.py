@@ -13,6 +13,30 @@ class EnvironmentTest(TestCase):
         pandoc_latex_environment.main(doc)
         return doc
 
+    def test_empty(self):
+        doc = EnvironmentTest.conversion(
+            """\
+---                           
+pandoc-latex-environment:
+  test: [class1, class2]
+---
+::: {.class1 .class2}
+:::
+            """.strip(),
+            "latex",
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="latex",
+            extra_args=["--wrap=none"],
+        )
+        self.assertEqual(
+            text,
+            """\
+            """.strip(),
+        )
+
     def test_simple(self):
         doc = EnvironmentTest.conversion(
             """\
