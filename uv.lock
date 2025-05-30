@@ -24,7 +24,7 @@ wheels = [
 
 [[package]]
 name = "pandoc-latex-environment"
-version = "1.2.0.0.post1.dev1"
+version = "1.2.1.0.post1.dev1"
 source = { editable = "." }
 dependencies = [
     { name = "panflute" },
