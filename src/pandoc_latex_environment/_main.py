@@ -48,6 +48,9 @@ def latex(
     else:
         label = ""
 
+    if not elem.content:
+        return None
+
     first = elem.content[0]
     while isinstance(first, Div):
         first = first.content[0]

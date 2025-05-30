@@ -16,7 +16,7 @@ Installation
 [![Downloads](https://img.shields.io/pypi/dm/pandoc-latex-environment?logo=pypi&logoColor=white)](https://pepy.tech/project/pandoc-latex-environment)
 [![Development Status](https://img.shields.io/pypi/status/pandoc-latex-environment.svg?logo=pypi&logoColor=white)](https://pypi.org/project/pandoc-latex-environment/)
 [![Python version](https://img.shields.io/pypi/pyversions/pandoc-latex-environment.svg?logo=Python&logoColor=white)](https://pypi.org/project/pandoc-latex-environment/)
-[![Pandoc version](https://img.shields.io/badge/pandoc-2.11%20..%203.6-blue.svg?logo=markdown)](https://pandoc.org/)
+[![Pandoc version](https://img.shields.io/badge/pandoc-2.11%20..%203.7-blue.svg?logo=markdown)](https://pandoc.org/)
 [![Latest release](https://img.shields.io/github/release-date/chdemko/pandoc-latex-environment.svg?logo=github)](https://github.com/chdemko/pandoc-latex-environment/releases)
 [![Last commit](https://img.shields.io/github/last-commit/chdemko/pandoc-latex-environment/develop?logo=github)](https://github.com/chdemko/pandoc-latex-environment/commit/develop/)
 [![Repo Size](https://img.shields.io/github/repo-size/chdemko/pandoc-latex-environment.svg?logo=github)](http://pandoc-latex-environment.readthedocs.io/en/latest/)

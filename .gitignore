@@ -1,0 +1,7 @@
+.coverage
+.idea/
+.venv
+build/
+junit.xml
+**/__pycache__/
+
